@@ -1,4 +1,5 @@
 import pygame
+import random
 
 
 class Ball():
@@ -7,8 +8,8 @@ class Ball():
         self.y = pos[1]
         self.color = (255, 0, 0)
         self.r = 50
-        self.step_x = 0
-        self.step_y = 0
+        self.step_x = random.randint(0, 5)
+        self.step_y = random.randint(0, 5)
 
     def move(self):
         self.x += self.step_x
@@ -23,11 +24,11 @@ class Ball():
 
 
 pygame.init()
-first_ball = Ball((100, 100))
-first_ball.change_dir(1, 1)
-FPS = 1000
+x, y = random.randint(100, 200), random.randint(100, 200)
+list_ball = [Ball((x, y)) for i in range(3)]
+FPS = 10
 screen = pygame.display.set_mode((800, 600))
-x, y = 100, 100
+
 clock = pygame.time.Clock()
 running = True
 while running:
@@ -35,12 +36,14 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     screen.fill((0, 0, 0))
-    first_ball.update()
-    first_ball.move()
-    if first_ball.x + first_ball.r == 800 or first_ball.x - first_ball.r == 0:
-        first_ball.change_dir(-first_ball.step_x, 0)
-    if first_ball.y + first_ball.r == 600 or first_ball.y - first_ball.r == 0:
-        first_ball.change_dir(0, -first_ball.step_y)
+    for bal in list_ball:
+        print(bal.x, bal.y, bal.r, bal.step_x, bal.step_y)
+        bal.update()
+        bal.move()
+        if bal.x + bal.r >= 800 or bal.x - bal.r <= 0:
+            bal.change_dir(-bal.step_x, bal.step_y)
+        if bal.y + bal.r >= 600 or bal.y - bal.r <= 0:
+            bal.change_dir(bal.step_x, -bal.step_y)
     clock.tick(FPS)
     pygame.display.flip()
 
