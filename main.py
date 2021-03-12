@@ -10,6 +10,9 @@ class Ball():
         self.r = 50
         self.step_x = random.randint(0, 5)
         self.step_y = random.randint(0, 5)
+        random_num = random.randint(0, 3)
+        list_calor = [(255, 127, 36), (69, 139, 0), (127, 255, 0), (255, 255, 255)]
+        self.random_calor = list_calor[random_num]
 
     def move(self):
         self.x += self.step_x
@@ -20,13 +23,13 @@ class Ball():
         self.step_y = step_y
 
     def update(self):
-        pygame.draw.circle(screen, self.color, (self.x, self.y), self.r)
+        pygame.draw.circle(screen, self.random_calor, (self.x, self.y), self.r)
 
 
 pygame.init()
 x, y = random.randint(100, 200), random.randint(100, 200)
-list_ball = [Ball((x, y)) for i in range(3)]
-FPS = 10
+list_ball = [Ball((x, y)) for i in range(10)]
+FPS = 100
 screen = pygame.display.set_mode((800, 600))
 
 clock = pygame.time.Clock()
